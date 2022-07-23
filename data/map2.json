@@ -1,0 +1,179 @@
+{
+    "list": [
+        {
+            "num" : 0,
+            "top": false,
+            "right": true,
+            "bot": true,
+            "left": true
+        },
+        {
+            "num" : 1,
+            "top": false,
+            "right": false,
+            "bot": true,
+            "left": false
+        },
+        {
+            "num" : 2,
+            "top": false,
+            "right": true,
+            "bot": true,
+            "left": false
+        },
+        {
+            "num" : 3,
+            "top": false,
+            "right": false,
+            "bot": true,
+            "left": true
+        },
+        {
+            "num" : 4,
+            "top": false,
+            "right": false,
+            "bot": false,
+            "left": false
+        },
+        {
+            "num" : 5,
+            "top": true,
+            "right": true,
+            "bot": true,
+            "left": true
+        },
+        {
+            "num" : 6,
+            "top": true,
+            "right": true,
+            "bot": true,
+            "left": true
+        },
+        {
+            "num" : 7,
+            "top": true,
+            "right": true,
+            "bot": false,
+            "left": false
+        },
+        {
+            "num" : 8,
+            "top": true,
+            "right": false,
+            "bot": false,
+            "left": true
+        },
+        {
+            "num" : 9,
+            "top": true,
+            "right": false,
+            "bot": false,
+            "left": true
+        },
+        {
+            "num" : 10,
+            "top": true,
+            "right": false,
+            "bot": true,
+            "left": false
+        },
+        {
+            "num" : 11,
+            "top": false,
+            "right": true,
+            "bot": false,
+            "left": true
+        },
+        {
+            "num" : 12,
+            "top": false,
+            "right": true,
+            "bot": false,
+            "left": true
+        },
+        {
+            "num" : 13,
+            "top": false,
+            "right": false,
+            "bot": false,
+            "left": true
+        },
+        {
+            "num" : 14,
+            "top": false,
+            "right": false,
+            "bot": false,
+            "left": false
+        },
+        {
+            "num" : 15,
+            "top": true,
+            "right": false,
+            "bot": false,
+            "left": false
+        },
+        {
+            "num" : 16,
+            "top": false,
+            "right": true,
+            "bot": false,
+            "left": false
+        },
+        {
+            "num" : 17,
+            "top": true,
+            "right": true,
+            "bot": false,
+            "left": true
+        },
+        {
+            "num" : 18,
+            "top": true,
+            "right": true,
+            "bot": true,
+            "left": false
+        },
+        {
+            "num" : 19,
+            "top": false,
+            "right": false,
+            "bot": false,
+            "left": false
+        },
+        {
+            "num" : 20,
+            "top": false,
+            "right": true,
+            "bot": true,
+            "left": false
+        },
+        {
+            "num" :  21,
+            "top": true,
+            "right": false,
+            "bot": true,
+            "left": false
+        },
+        {
+            "num" : 22,
+            "top": false,
+            "right": false,
+            "bot": false,
+            "left": false
+        },
+        {
+            "num" : 23,
+            "top": false,
+            "right": false,
+            "bot": false,
+            "left": false
+        },
+        {
+            "num" : 24,
+            "top": false,
+            "right": false,
+            "bot": false,
+            "left": false
+        }
+    ]
+}
