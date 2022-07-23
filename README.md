@@ -1,3 +1,2 @@
-## wafuco
-
-# binary two dimensional collapsing wave function
+# wafuco
+## binary two dimensional collapsing wave function
