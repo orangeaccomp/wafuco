@@ -16,14 +16,15 @@ public class Config {
     }
 
     class Holder {
-        ArrayList<Orientation> list;
+        ArrayList<TileInformation> list;
     }
 
-    class Orientation {
+    class TileInformation {
         boolean top;
         boolean right;
         boolean bot;
         boolean left;
+        String rotation;
     }
 
     private void loadConfig(String path) throws IOException {
@@ -34,7 +35,7 @@ public class Config {
         this.holder = gson.fromJson(content, Holder.class);  
     }
 
-    public Orientation get(int index){
+    public TileInformation get(int index){
         return this.holder.list.get(index);
     }
 }

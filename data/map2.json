@@ -5,175 +5,200 @@
             "top": false,
             "right": true,
             "bot": true,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 1,
             "top": false,
             "right": false,
             "bot": true,
-            "left": false
+            "left": false,
+            "rotation": "full"            
         },
         {
             "num" : 2,
             "top": false,
             "right": true,
             "bot": true,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 3,
             "top": false,
             "right": false,
             "bot": true,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 4,
             "top": false,
             "right": false,
             "bot": false,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 5,
             "top": true,
             "right": true,
             "bot": true,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 6,
             "top": true,
             "right": true,
             "bot": true,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 7,
             "top": true,
             "right": true,
             "bot": false,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 8,
             "top": true,
             "right": false,
             "bot": false,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 9,
             "top": true,
             "right": false,
             "bot": false,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 10,
             "top": true,
             "right": false,
             "bot": true,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 11,
             "top": false,
             "right": true,
             "bot": false,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 12,
             "top": false,
             "right": true,
             "bot": false,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 13,
             "top": false,
             "right": false,
             "bot": false,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 14,
             "top": false,
             "right": false,
             "bot": false,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 15,
             "top": true,
             "right": false,
             "bot": false,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 16,
             "top": false,
             "right": true,
             "bot": false,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 17,
             "top": true,
             "right": true,
             "bot": false,
-            "left": true
+            "left": true,
+            "rotation": "full"
         },
         {
             "num" : 18,
             "top": true,
             "right": true,
             "bot": true,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 19,
             "top": false,
             "right": false,
             "bot": false,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 20,
             "top": false,
             "right": true,
             "bot": true,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" :  21,
             "top": true,
             "right": false,
             "bot": true,
-            "left": false
+            "left": false,
+            "rotation": "non"
         },
         {
             "num" : 22,
             "top": false,
             "right": false,
             "bot": false,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 23,
             "top": false,
             "right": false,
             "bot": false,
-            "left": false
+            "left": false,
+            "rotation": "full"
         },
         {
             "num" : 24,
             "top": false,
             "right": false,
             "bot": false,
-            "left": false
+            "left": false,
+            "rotation": "full"
         }
     ]
 }
