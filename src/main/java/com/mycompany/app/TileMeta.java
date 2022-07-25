@@ -1,27 +1,30 @@
 package com.mycompany.app;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
+import java.util.Collection;
 
 public class TileMeta {
     private int width = 10;
     private int height = 10;
     private ArrayList<Tile> tiles;
 
-    public TileMeta(int width, int height, String fileImage, String fileConfig) throws Exception {
+    private Config config;
+    private BufferedImage baseImage;
+
+    public TileMeta(int width, int height, BufferedImage baseImage, Config conig) throws Exception {
         this.width = width;
         this.height = height;
+        this.config = conig;
+        this.baseImage = baseImage;
 
-        loadTiles(fileImage);
-        SetTilePatterns(new Config(fileConfig));
+        loadTiles();
+        SetTilePatterns();
+        creatRotationalVariation();
         giveTilesIncompatible();
     }
 
-    private TileMeta loadTiles(String path) throws Exception {
-        BufferedImage baseImage = ImageIO.read(new File(path));
+    private TileMeta loadTiles() throws Exception {
         if (baseImage.getWidth() % this.width != 0) {
             throw new Exception("width of base image should be %0 to tile size");
         }
@@ -30,9 +33,9 @@ public class TileMeta {
         }
 
         this.tiles = new ArrayList<>();
-        for (int y = 0; y < baseImage.getHeight(); y += this.height) {
-            for (int x = 0; x < baseImage.getWidth(); x += this.width) {
-                BufferedImage subImg = baseImage.getSubimage(x, y, this.width, this.height);
+        for (int y = 0; y < this.baseImage.getHeight(); y += this.height) {
+            for (int x = 0; x < this.baseImage.getWidth(); x += this.width) {
+                BufferedImage subImg = this.baseImage.getSubimage(x, y, this.width, this.height);
                 Tile tile = new Tile(subImg);
                 this.tiles.add(tile);
             }
@@ -40,37 +43,75 @@ public class TileMeta {
         return this;
     }
 
-    private TileMeta SetTilePatterns(Config config) {
+    private void SetTilePatterns() {
         int mainIndex = 0;
         for (Tile mainTile : this.tiles) {
-            mainTile.top = config.get(mainIndex).top;
-            mainTile.right = config.get(mainIndex).right;
-            mainTile.bot = config.get(mainIndex).bot;
-            mainTile.left = config.get(mainIndex).left;
-            
+            mainTile.top = this.config.get(mainIndex).top;
+            mainTile.right = this.config.get(mainIndex).right;
+            mainTile.bot = this.config.get(mainIndex).bot;
+            mainTile.left = this.config.get(mainIndex).left;
+
             mainIndex++;
         }
-        return this;
     }
 
-    private TileMeta giveTilesIncompatible(){
-        for(Tile main: this.tiles){
-            for(Tile match: this.tiles){
-                if(main.top != match.bot){
+    private void giveTilesIncompatible() {
+        for (Tile main : this.tiles) {
+            for (Tile match : this.tiles) {
+                if (main.top != match.bot) {
                     main.incompatibleTop.add(match);
                 }
-                if(main.right != match.left){
+                if (main.right != match.left) {
                     main.incompatibleRight.add(match);
                 }
-                if(main.bot != match.top){
+                if (main.bot != match.top) {
                     main.incompatibleBot.add(match);
                 }
-                if(main.left != match.right){
+                if (main.left != match.right) {
                     main.incompatibleLeft.add(match);
                 }
             }
         }
-        return this;        
+    }
+
+    private void creatRotationalVariation() {
+        Collection<Tile> rotatedTiles = new ArrayList<>();
+        int index = 0;
+        for (Tile mainTile : this.tiles) {
+            String rotation = this.config.get(index).rotation; // TODO add enum
+            boolean mirror = this.config.get(index).mirror;
+
+            if (rotation.equals("full")) {
+                BufferedImage ninety = ImageUtil.ninety(mainTile.img);
+                Tile ninetyTile = new Tile(ninety);
+                ninetyTile.setPattern(mainTile.left, mainTile.top, mainTile.right, mainTile.bot);
+                rotatedTiles.add(ninetyTile);
+
+                BufferedImage oneEighty = ImageUtil.ninety(ninety);
+                Tile oneEightyTile = new Tile(oneEighty);
+                oneEightyTile.setPattern(mainTile.bot, mainTile.left, mainTile.top, mainTile.right);
+                rotatedTiles.add(oneEightyTile);
+
+               
+                BufferedImage sevenTwenty = ImageUtil.ninety(oneEighty);
+                Tile sevenTwentyTile = new Tile(sevenTwenty);
+                sevenTwentyTile.setPattern(mainTile.right, mainTile.bot, mainTile.left, mainTile.top);
+                rotatedTiles.add(sevenTwentyTile);
+            }
+
+            if(mirror){
+                BufferedImage mirroredImage = ImageUtil.mirror(mainTile.img);
+                Tile mirroredTile = new Tile(mirroredImage);
+                mirroredTile.setPattern(mainTile.top, mainTile.left, mainTile.bot, mainTile.right);
+                rotatedTiles.add(mirroredTile);
+            }
+
+
+
+
+            index++;
+        }
+        this.tiles.addAll(rotatedTiles);
     }
 
     public ArrayList<Tile> getTiles() {

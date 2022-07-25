@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 public class Config {
-    Holder holder;
+    TileInformationList holder;
 
     public Config(String path) throws IOException {
         loadConfig(path);
     }
 
-    class Holder {
+    class TileInformationList {
         ArrayList<TileInformation> list;
     }
 
@@ -25,6 +25,7 @@ public class Config {
         boolean bot;
         boolean left;
         String rotation;
+        boolean mirror;
     }
 
     private void loadConfig(String path) throws IOException {
@@ -32,7 +33,7 @@ public class Config {
         String content = Files.readString(fileName);
 
         Gson gson = new Gson();
-        this.holder = gson.fromJson(content, Holder.class);  
+        this.holder = gson.fromJson(content, TileInformationList.class);
     }
 
     public TileInformation get(int index){
