@@ -33,7 +33,7 @@ public class Board {
             return true;
 
         Entropy entropy = findLowestEntropy();
-        entropy.collaps();
+        entropy.influencedCollaps();
         changeStateNeighbor(entropy);
 
         return isFullCollapst();
