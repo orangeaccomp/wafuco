@@ -3,7 +3,7 @@ package com.mycompany.app;
 import java.awt.image.BufferedImage;
 
 public class ImageUtil {
-    public static BufferedImage ninety(BufferedImage src){
+    public static BufferedImage rotate(BufferedImage src){
         final int w = src.getWidth();
         final int h = src.getHeight();
         BufferedImage rot = new BufferedImage(w, h, src.getType());

@@ -82,36 +82,30 @@ public class TileMeta {
             boolean mirror = this.config.get(index).mirror;
 
             if (rotation.equals("full")) {
-                BufferedImage ninety = ImageUtil.ninety(mainTile.img);
-                Tile ninetyTile = new Tile(ninety);
-                ninetyTile.setPattern(mainTile.left, mainTile.top, mainTile.right, mainTile.bot);
-                rotatedTiles.add(ninetyTile);
-
-                BufferedImage oneEighty = ImageUtil.ninety(ninety);
-                Tile oneEightyTile = new Tile(oneEighty);
-                oneEightyTile.setPattern(mainTile.bot, mainTile.left, mainTile.top, mainTile.right);
-                rotatedTiles.add(oneEightyTile);
-
-               
-                BufferedImage sevenTwenty = ImageUtil.ninety(oneEighty);
-                Tile sevenTwentyTile = new Tile(sevenTwenty);
-                sevenTwentyTile.setPattern(mainTile.right, mainTile.bot, mainTile.left, mainTile.top);
-                rotatedTiles.add(sevenTwentyTile);
+                Tile ninety = getRotatedTile(mainTile);
+                Tile oneEighty = getRotatedTile(ninety);
+                Tile sevenTwenty = getRotatedTile(oneEighty);
+                rotatedTiles.add(ninety);
+                rotatedTiles.add(oneEighty);
+                rotatedTiles.add(sevenTwenty);
             }
 
-            if(mirror){
+            if (mirror) {
                 BufferedImage mirroredImage = ImageUtil.mirror(mainTile.img);
                 Tile mirroredTile = new Tile(mirroredImage);
                 mirroredTile.setPattern(mainTile.top, mainTile.left, mainTile.bot, mainTile.right);
                 rotatedTiles.add(mirroredTile);
             }
-
-
-
-
             index++;
         }
         this.tiles.addAll(rotatedTiles);
+    }
+
+    private Tile getRotatedTile(Tile tile) {
+        BufferedImage rotatedImg = ImageUtil.rotate(tile.img);
+        Tile rotaTile = new Tile(rotatedImg);
+        rotaTile.setPattern(tile.left, tile.top, tile.right, tile.bot);
+        return rotaTile;
     }
 
     public ArrayList<Tile> getTiles() {
