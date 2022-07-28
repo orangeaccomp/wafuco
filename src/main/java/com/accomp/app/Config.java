@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.accomp.app;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,14 +9,20 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 public class Config {
-    TileInformationList holder;
+    TileInformationList tileInformationList;
 
     public Config(String path) throws IOException {
         loadConfig(path);
     }
 
     class TileInformationList {
+        Meta meta;
         ArrayList<TileInformation> list;
+    }
+
+    class Meta {
+        int width;
+        int height;
     }
 
     class TileInformation {
@@ -33,10 +39,10 @@ public class Config {
         String content = Files.readString(fileName);
 
         Gson gson = new Gson();
-        this.holder = gson.fromJson(content, TileInformationList.class);
+        this.tileInformationList = gson.fromJson(content, TileInformationList.class);
     }
 
-    public TileInformation get(int index){
-        return this.holder.list.get(index);
+    public TileInformation get(int index) {
+        return this.tileInformationList.list.get(index);
     }
 }

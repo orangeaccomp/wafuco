@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.accomp.app;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

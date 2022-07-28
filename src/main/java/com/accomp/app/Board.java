@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.accomp.app;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -28,7 +28,7 @@ public class Board {
         }
     }
 
-    public boolean iterat() throws Exception {        
+    public boolean iterat() throws Exception {
         if (isFullCollapst())
             return true;
 
@@ -57,14 +57,14 @@ public class Board {
 
             int x = ((int) i % this.dimensionWidth) * this.tileMeta.getWidth();
             int y = ((int) i / this.dimensionHeight) * this.tileMeta.getHeight();
-            graphics.drawImage(imageOnSpot, x, y, null);            
+            graphics.drawImage(imageOnSpot, x, y, null);
         }
 
         graphics.dispose();
 
         String date = new Date().toString();
         ImageIO.write(img, "png", new File(path + "/Collapsed" + date + ".png"));
-    }    
+    }
 
     public boolean isFullCollapst() {
         for (Entropy entropy : this.spots) {

@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.accomp.app;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class Entropy {
                     break;
             }
 
-            if(isPotent){
+            if (isPotent) {
                 potentlist.add(tile);
             }
         }
