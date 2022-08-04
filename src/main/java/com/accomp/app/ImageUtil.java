@@ -33,4 +33,7 @@ public class ImageUtil {
         return mir;
     }
 
+    public static BufferedImage getEmptyImage() {
+        return new BufferedImage(10, 10, BufferedImage.TYPE_BYTE_BINARY);
+    }
 }

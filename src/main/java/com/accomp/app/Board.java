@@ -33,7 +33,7 @@ public class Board {
             return true;
 
         Entropy entropy = findLowestEntropy();
-        entropy.influencedCollaps();
+        entropy.collaps();
         changeStateNeighbor(entropy);
 
         return isFullCollapst();
@@ -53,7 +53,7 @@ public class Board {
 
         for (int i = 0; i < this.spots.size(); i++) {
             Entropy entropy = this.spots.get(i);
-            BufferedImage imageOnSpot = entropy.getImage();
+            BufferedImage imageOnSpot = entropy.getImageFromFinalTile();
 
             int x = ((int) i % this.dimensionWidth) * this.tileMeta.getWidth();
             int y = ((int) i / this.dimensionHeight) * this.tileMeta.getHeight();
@@ -94,16 +94,16 @@ public class Board {
         int indexLeft = index - 1;
 
         if (indexTop >= 0 && indexTop < this.spots.size()) {
-            this.spots.get(indexTop).reduce(entropy.getTile().incompatibleTop);
+            this.spots.get(indexTop).reduce(entropy.getFinalTile().incompatibleTop);
         }
         if (indexRight >= 0 && indexRight < this.spots.size()) {
-            this.spots.get(indexRight).reduce(entropy.getTile().incompatibleRight);
+            this.spots.get(indexRight).reduce(entropy.getFinalTile().incompatibleRight);
         }
         if (indexBot >= 0 && indexBot < this.spots.size()) {
-            this.spots.get(indexBot).reduce(entropy.getTile().incompatibleBot);
+            this.spots.get(indexBot).reduce(entropy.getFinalTile().incompatibleBot);
         }
         if (indexLeft >= 0 && indexLeft < this.spots.size()) {
-            this.spots.get(indexLeft).reduce(entropy.getTile().incompatibleLeft);
+            this.spots.get(indexLeft).reduce(entropy.getFinalTile().incompatibleLeft);
         }
     }
 
