@@ -9,22 +9,20 @@ public class TileMeta {
     private int height = 10;
     private ArrayList<Tile> tiles;
 
-    private Config config;
     private BufferedImage baseImage;
 
-    public TileMeta(int width, int height, BufferedImage baseImage, Config conig) throws Exception {
+    public TileMeta(int width, int height, BufferedImage baseImage) throws Exception {
         this.width = width;
         this.height = height;
-        this.config = conig;
         this.baseImage = baseImage;
 
-        loadTiles();
-        SetTilePatterns();
+        creatTiles();
         creatRotationalVariation();
+        deletDuplicate();
         giveTilesIncompatible();
     }
 
-    private TileMeta loadTiles() throws Exception {
+    private void creatTiles() throws Exception {
         if (baseImage.getWidth() % this.width != 0) {
             throw new Exception("width of base image should be %0 to tile size");
         }
@@ -40,34 +38,21 @@ public class TileMeta {
                 this.tiles.add(tile);
             }
         }
-        return this;
-    }
-
-    private void SetTilePatterns() {
-        int mainIndex = 0;
-        for (Tile mainTile : this.tiles) {
-            mainTile.top = this.config.get(mainIndex).top;
-            mainTile.right = this.config.get(mainIndex).right;
-            mainTile.bot = this.config.get(mainIndex).bot;
-            mainTile.left = this.config.get(mainIndex).left;
-
-            mainIndex++;
-        }
     }
 
     private void giveTilesIncompatible() {
         for (Tile main : this.tiles) {
             for (Tile match : this.tiles) {
-                if (main.top != match.bot) {
+                if (!main.top.isEqual(match.bot)) {
                     main.incompatibleTop.add(match);
                 }
-                if (main.right != match.left) {
+                if (!main.right.isEqual(match.left)) {
                     main.incompatibleRight.add(match);
                 }
-                if (main.bot != match.top) {
+                if (!main.bot.isEqual(match.top)) {
                     main.incompatibleBot.add(match);
                 }
-                if (main.left != match.right) {
+                if (!main.left.isEqual(match.right)) {
                     main.incompatibleLeft.add(match);
                 }
             }
@@ -76,35 +61,25 @@ public class TileMeta {
 
     private void creatRotationalVariation() {
         Collection<Tile> rotatedTiles = new ArrayList<>();
-        int index = 0;
         for (Tile mainTile : this.tiles) {
-            String rotation = this.config.get(index).rotation; // TODO add enum
-            boolean mirror = this.config.get(index).mirror;
-
-            if (rotation.equals("full")) {
-                Tile ninety = getRotatedTile(mainTile);
-                Tile oneEighty = getRotatedTile(ninety);
-                Tile sevenTwenty = getRotatedTile(oneEighty);
-                rotatedTiles.add(ninety);
-                rotatedTiles.add(oneEighty);
-                rotatedTiles.add(sevenTwenty);
-            }
-
-            if (mirror) {
-                BufferedImage mirroredImage = ImageUtil.mirror(mainTile.img);
-                Tile mirroredTile = new Tile(mirroredImage);
-                mirroredTile.setPattern(mainTile.top, mainTile.left, mainTile.bot, mainTile.right);
-                rotatedTiles.add(mirroredTile);
-            }
-            index++;
+            Tile ninety = this.creatRotatedTile(mainTile);
+            Tile oneEighty = this.creatRotatedTile(ninety);
+            Tile sevenTwenty = this.creatRotatedTile(oneEighty);
+            rotatedTiles.add(ninety);
+            rotatedTiles.add(oneEighty);
+            rotatedTiles.add(sevenTwenty);
         }
         this.tiles.addAll(rotatedTiles);
     }
 
-    private Tile getRotatedTile(Tile tile) {
+    private void deletDuplicate() {
+        // TODO
+    }
+
+    // 90deg
+    private Tile creatRotatedTile(Tile tile) {
         BufferedImage rotatedImg = ImageUtil.rotate(tile.img);
         Tile rotaTile = new Tile(rotatedImg);
-        rotaTile.setPattern(tile.left, tile.top, tile.right, tile.bot);
         return rotaTile;
     }
 

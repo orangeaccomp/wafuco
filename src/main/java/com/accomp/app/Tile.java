@@ -8,10 +8,10 @@ public class Tile implements Cloneable {
     BufferedImage img;
 
     // Pattern
-    boolean top;
-    boolean right;
-    boolean bot;
-    boolean left;
+    Edge top;
+    Edge right;
+    Edge bot;
+    Edge left;
 
     // incompatible Tiles
     Set<Tile> incompatibleTop = new HashSet<>();
@@ -21,21 +21,27 @@ public class Tile implements Cloneable {
 
     public Tile(BufferedImage img) {
         this.img = img;
+        makeEdge();
+    }
+
+    private void makeEdge() {
+        top = new Edge(new int[img.getWidth()]);
+        right = new Edge(new int[img.getHeight()]);
+        bot = new Edge(new int[img.getWidth()]);
+        left = new Edge(new int[img.getHeight()]);
+
+        for (int x = 0; x < img.getWidth(); x++) {
+            top.set(x, img.getRGB(x, 0));
+            bot.set(x, img.getRGB(x, img.getHeight() - 1));
+        }
+
+        for (int y = 0; y < img.getHeight(); y++) {
+            right.set(y, img.getRGB(img.getWidth() - 1, y));
+            left.set(y, img.getRGB(0, y));
+        }
     }
 
     public Tile clone() {
-        Tile cloneTile = new Tile(img);
-        cloneTile.incompatibleTop = incompatibleTop;
-        cloneTile.incompatibleRight = incompatibleRight;
-        cloneTile.incompatibleBot = incompatibleBot;
-        cloneTile.incompatibleLeft = incompatibleLeft;
-        return cloneTile;
-    }
-
-    public void setPattern(boolean top, boolean right, boolean bot, boolean left) {
-        this.top = top;
-        this.right = right;
-        this.bot = bot;
-        this.left = left;
+        return new Tile(img);
     }
 }
