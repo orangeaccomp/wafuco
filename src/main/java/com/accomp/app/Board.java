@@ -120,8 +120,12 @@ public class Board {
     }
 
     private void analyse() {        
-        for(Entropy entropy: this.spots){
-            
+        for(int x = 0; x < this.dimensionWidth; x ++){
+            for(int y = 0; y < this.dimensionHeight; y++){
+                int index = x + y * this.dimensionHeight;
+                Entropy entropy = this.spots.get(index);
+                
+            }
         }
     }
 
