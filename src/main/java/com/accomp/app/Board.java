@@ -26,7 +26,8 @@ public class Board {
         while (!this.isFullCollapst()) {
             iterat();
         }
-    }
+        analyse();
+    }   
 
     public boolean iterat() throws Exception {
         if (isFullCollapst())
@@ -62,8 +63,8 @@ public class Board {
 
         graphics.dispose();
 
-        String date = new Date().toString();
-        ImageIO.write(img, "png", new File(path + "/Collapsed" + date + ".png"));
+        long date = new Date().getTime();
+        ImageIO.write(img, "png", new File(path + File.separator + "Collapsed" + date + ".png"));
     }
 
     public boolean isFullCollapst() {
@@ -116,6 +117,12 @@ public class Board {
             }
         }
         return lowestEntropy;
+    }
+
+    private void analyse() {        
+        for(Entropy entropy: this.spots){
+            
+        }
     }
 
     public String toString() {

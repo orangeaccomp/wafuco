@@ -57,7 +57,7 @@ public class Entropy {
         if (!this.isFinal()) {
             throw new Exception("Entropy not final, states:{" + this.states + "}");
         }
-        return this.states.stream().findAny().get().img;
+        return this.states.stream().findAny().get().getImg();
     }
 
     @Override

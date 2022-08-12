@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Tile implements Cloneable {
-    BufferedImage img;
+    private BufferedImage img;
 
     // Pattern
     Edge top;
@@ -43,5 +43,9 @@ public class Tile implements Cloneable {
 
     public Tile clone() {
         return new Tile(img);
+    }
+
+    public BufferedImage getImg(){
+        return this.img;
     }
 }
