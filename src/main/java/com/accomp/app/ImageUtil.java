@@ -18,7 +18,7 @@ public class ImageUtil {
         return rot;
     }
 
-    public static BufferedImage mirror(BufferedImage src) {
+    public static BufferedImage mirrorX(BufferedImage src) {
         final int w = src.getWidth();
         final int h = src.getHeight();
         BufferedImage mir = new BufferedImage(w, h, src.getType());

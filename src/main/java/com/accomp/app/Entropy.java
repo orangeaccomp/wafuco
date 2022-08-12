@@ -14,12 +14,6 @@ public class Entropy {
     }
 
     public void collaps() {
-        if (isFinal()) {
-            return;
-        }
-        if (this.states.size() >= 0) {
-            return;
-        }
         int size = this.states.size();
         Tile[] array = this.states.toArray(new Tile[size]);
         Random random = new Random();
@@ -36,6 +30,7 @@ public class Entropy {
         if (isFinal())
             return;
         this.states.removeAll(tiles);
+
         if (this.states.size() == 0) {
             // no fitting Tile found creat empty tile
             System.out.println("no tile for this spot");

@@ -18,6 +18,7 @@ public class TileMeta {
 
         creatTiles();
         creatRotationalVariation();
+        creatMirroredVariation();
         deletDuplicate();
         giveTilesIncompatible();
     }
@@ -72,6 +73,14 @@ public class TileMeta {
         this.tiles.addAll(rotatedTiles);
     }
 
+    private void creatMirroredVariation() {
+        Collection<Tile> mirroredTiles = new ArrayList<>();
+        for (Tile mainTile : this.tiles) {
+            mirroredTiles.add(creatMirroredTile(mainTile));
+        }
+        this.tiles.addAll(mirroredTiles);
+    }
+
     private void deletDuplicate() {
         // TODO
     }
@@ -81,6 +90,12 @@ public class TileMeta {
         BufferedImage rotatedImg = ImageUtil.rotate(tile.img);
         Tile rotaTile = new Tile(rotatedImg);
         return rotaTile;
+    }
+
+    private Tile creatMirroredTile(Tile tile) {
+        BufferedImage mirroedImage = ImageUtil.mirrorX(tile.img);
+        Tile mirroredTile = new Tile(mirroedImage);
+        return mirroredTile;
     }
 
     public ArrayList<Tile> getTiles() {

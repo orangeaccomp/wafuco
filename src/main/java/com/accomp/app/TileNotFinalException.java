@@ -6,9 +6,4 @@ public class TileNotFinalException extends Exception {
     public TileNotFinalException(Entropy entropy) {
         this.entropy = entropy;
     }
-
-    public void printStackTrace() {
-
-    }
-
 }
