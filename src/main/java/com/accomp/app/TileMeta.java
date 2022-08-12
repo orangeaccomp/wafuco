@@ -3,6 +3,9 @@ package com.accomp.app;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TileMeta {
     private int width = 10;
@@ -19,8 +22,10 @@ public class TileMeta {
         creatTiles();
         creatRotationalVariation();
         creatMirroredVariation();
-        deletDuplicate();
+        // deletDuplicate();
         giveTilesIncompatible();
+
+        analyseEdges();
     }
 
     private void creatTiles() throws Exception {
@@ -120,6 +125,23 @@ public class TileMeta {
 
     public int getHeight() {
         return height;
+    }
+
+    private void analyseEdges() {
+        ArrayList<Edge> edges = new ArrayList<>();
+        for (Tile tile : this.tiles) {
+            edges.add(tile.top);
+            edges.add(tile.right);
+            edges.add(tile.bot);
+            edges.add(tile.left);
+        }
+
+        HashMap<String, Edge> map = new HashMap<>();
+        for (Edge edge : edges) {
+            map.put(edge.hash(), edge);
+        }
+        System.out.println(map.keySet().size());
+        ImageUtil.makeEdgeGroupImage(map.values());
     }
 
 }

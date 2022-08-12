@@ -1,6 +1,11 @@
 package com.accomp.app;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+
+import javax.imageio.ImageIO;
 
 public class ImageUtil {
     public static BufferedImage rotate(BufferedImage src) {
@@ -51,5 +56,23 @@ public class ImageUtil {
             }
         }
         return true;
+    }
+
+    public static void makeEdgeGroupImage(Collection<Edge> edges) {
+        int width = edges.stream().findAny().get().getPixels().length;
+        int height = edges.size();
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        int y = 0;
+        for (Edge edge : edges) {
+            for (int x = 0; x < width; x++)
+                image.setRGB(x, y, edge.getPixels()[x]);
+            y++;
+        }
+        try {
+            ImageIO.write(image, "png", new File("debug" + File.separator + "Edges.png"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
