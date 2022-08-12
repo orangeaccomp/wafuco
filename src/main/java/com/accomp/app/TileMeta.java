@@ -82,7 +82,19 @@ public class TileMeta {
     }
 
     private void deletDuplicate() {
-        // TODO
+        ArrayList<Tile> dupplicateTiles = new ArrayList<>();
+        for (Tile tileA : this.tiles) {
+            for (Tile tileB : this.tiles) {
+                if (tileA != tileB) {
+                    boolean duplicat = ImageUtil.equal(tileA.getImg(), tileB.getImg());
+                    if (duplicat) {
+                        dupplicateTiles.add(tileB);
+                    }
+                }
+            }
+        }
+        System.out.println("removing: " + dupplicateTiles.size());
+        this.tiles.removeAll(dupplicateTiles);
     }
 
     // 90deg

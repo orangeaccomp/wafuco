@@ -36,4 +36,20 @@ public class ImageUtil {
     public static BufferedImage getEmptyImage() {
         return new BufferedImage(10, 10, BufferedImage.TYPE_BYTE_BINARY);
     }
+
+    public static boolean equal(BufferedImage a, BufferedImage b) {
+        int width = a.getWidth();
+        int height = a.getHeight();
+        if (width != b.getWidth() || height != b.getWidth())
+            return false;
+        for (int x = 0; x < height; x++) {
+            for (int y = 0; y < width; y++) {
+                int rgbA = a.getRGB(x, y);
+                int rgbB = b.getRGB(x, y);
+                if (rgbA != rgbB)
+                    return false;
+            }
+        }
+        return true;
+    }
 }
