@@ -63,8 +63,8 @@ public class Board {
 
         graphics.dispose();
 
-        long date = new Date().getTime();
-        ImageIO.write(img, "png", new File(path + File.separator + "Collapsed" + date + ".png"));
+        //long date = new Date().getTime();
+        ImageIO.write(img, "png", new File(path + File.separator + "Collapsed.png"));        
     }
 
     public boolean isFullCollapst() {
