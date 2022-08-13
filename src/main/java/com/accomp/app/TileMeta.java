@@ -146,8 +146,7 @@ public class TileMeta {
         HashMap<String, Edge> map = new HashMap<>();
         for (Edge edge : edges) {
             map.put(edge.hash(), edge);
-        }
-        System.out.println(map.keySet().size());
+        }       
         ImageUtil.debugEdgeGroup(map.values());
     }
 
