@@ -25,4 +25,12 @@ public class Edge {
     public int[] getPixels() {
         return pixels;
     }
+
+    public String hash() {
+        String str = "";
+        for (int i = 0; i < this.pixels.length; i++) {
+            str += pixels[i];
+        }
+        return str;
+    }
 }
