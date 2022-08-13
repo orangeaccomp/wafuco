@@ -48,4 +48,28 @@ public class Tile implements Cloneable {
     public BufferedImage getImg(){
         return this.img;
     }
+
+    public String hash(){
+        return ImageUtil.hash(this.img);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        } 
+        
+        final Tile other = (Tile) obj;
+        if(other.hash() != other.hash()){
+            return false;
+        }
+
+        return true;
+    }
+
+    
 }

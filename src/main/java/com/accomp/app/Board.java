@@ -25,6 +25,9 @@ public class Board {
     public void run() throws Exception {
         long startTime  = System.currentTimeMillis();
         while (!this.isFullCollapst()) {
+            if(System.currentTimeMillis() - startTime > 1400){
+                break;
+            }
             // TODO remove need for newstart
             boolean newstart = false;
             newstart = !iterat();            

@@ -22,9 +22,8 @@ public class TileMeta {
         creatTiles();
         creatRotationalVariation();
         creatMirroredVariation();
-        //deletDuplicate();
+        //deletDuplicate(); //TODO
         giveTilesIncompatible();
-
 
         // debug
         analyseEdges();
@@ -91,22 +90,12 @@ public class TileMeta {
 
     // fix deleting all symetery tiles
     private void deletDuplicate() {
-        ArrayList<Tile> dupplicateTiles = new ArrayList<>();
-        Set<Tile> saveDupplicateTiles = new HashSet<>();
-        for (Tile tileA : this.tiles) {
-            for (Tile tileB : this.tiles) {
-                if (tileA != tileB) {
-                    boolean duplicat = ImageUtil.equal(tileA.getImg(), tileB.getImg());
-                    if (duplicat) {
-                        dupplicateTiles.add(tileB);
-                        saveDupplicateTiles.add(tileB);
-                    }
-                }
-            }
+        Set<Tile> set = new HashSet<>();
+        for (Tile tile : this.tiles) {
+            set.add(tile);
         }
-        System.out.println("removing: " + dupplicateTiles.size());
-        this.tiles.removeAll(dupplicateTiles);
-        this.tiles.addAll(saveDupplicateTiles);
+        this.tiles = new ArrayList<>();
+        this.tiles.addAll(set);
     }
 
     // 90deg
@@ -146,11 +135,11 @@ public class TileMeta {
         HashMap<String, Edge> map = new HashMap<>();
         for (Edge edge : edges) {
             map.put(edge.hash(), edge);
-        }       
+        }
         ImageUtil.debugEdgeGroup(map.values());
     }
 
-    private void analyseTileVariation(){
+    private void analyseTileVariation() {
         ImageUtil.debugTiles(tiles);
     }
 

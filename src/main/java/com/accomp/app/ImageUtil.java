@@ -8,6 +8,10 @@ import java.util.Collection;
 
 import javax.imageio.ImageIO;
 
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+
 public class ImageUtil {
     public static BufferedImage rotate(BufferedImage src) {
         final int w = src.getWidth();
@@ -106,6 +110,20 @@ public class ImageUtil {
         } catch (IOException e) {            
             e.printStackTrace();
         }
+    }
+
+    public static String hash(BufferedImage img) {
+        String str = "";
+        int width = img.getWidth();
+        int height = img.getHeight();
+        for (int x = 0; x < height; x++) {
+            for (int y = 0; y < width; y++) {
+                str += img.getRGB(x, y);
+            }
+        }
+        HashFunction hashFunction = Hashing.sha256();
+        HashCode hashCode = hashFunction.hashUnencodedChars(str);   
+        return hashCode.toString();
     }
 
 }
