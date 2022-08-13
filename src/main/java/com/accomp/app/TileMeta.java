@@ -53,16 +53,16 @@ public class TileMeta {
         for (Tile main : this.tiles) {
             for (Tile match : this.tiles) {
                 if (!main.top.isEqual(match.bot)) {
-                    main.incompatibleTop.add(match);
+                    main.incompatiblesTop.add(match);
                 }
                 if (!main.right.isEqual(match.left)) {
-                    main.incompatibleRight.add(match);
+                    main.incompatiblesRight.add(match);
                 }
                 if (!main.bot.isEqual(match.top)) {
-                    main.incompatibleBot.add(match);
+                    main.incompatiblesBot.add(match);
                 }
                 if (!main.left.isEqual(match.right)) {
-                    main.incompatibleLeft.add(match);
+                    main.incompatiblesLeft.add(match);
                 }
             }
         }

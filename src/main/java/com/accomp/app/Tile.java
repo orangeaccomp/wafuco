@@ -14,10 +14,10 @@ public class Tile implements Cloneable {
     Edge left;
 
     // incompatible Tiles
-    Set<Tile> incompatibleTop = new HashSet<>();
-    Set<Tile> incompatibleRight = new HashSet<>();
-    Set<Tile> incompatibleBot = new HashSet<>();
-    Set<Tile> incompatibleLeft = new HashSet<>();
+    Set<Tile> incompatiblesTop = new HashSet<>();
+    Set<Tile> incompatiblesRight = new HashSet<>();
+    Set<Tile> incompatiblesBot = new HashSet<>();
+    Set<Tile> incompatiblesLeft = new HashSet<>();
 
     public Tile(BufferedImage img) {
         this.img = img;

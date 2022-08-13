@@ -5,14 +5,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
 public class Board {
-    int dimensionWidth, dimensionHeight;
-    TileMeta tileMeta;
-    ArrayList<Entropy> spots;
+    private int dimensionWidth, dimensionHeight;
+    private TileMeta tileMeta;
+    private ArrayList<Entropy> spots;
 
     public Board(TileMeta tileMeta, int width, int height) {
         this.tileMeta = tileMeta;
@@ -27,7 +27,7 @@ public class Board {
             iterat();
         }
         analyse();
-    }   
+    }
 
     public boolean iterat() throws Exception {
         if (isFullCollapst())
@@ -63,8 +63,8 @@ public class Board {
 
         graphics.dispose();
 
-        //long date = new Date().getTime();
-        ImageIO.write(img, "png", new File(path + File.separator + "Collapsed.png"));        
+        // long date = new Date().getTime();
+        ImageIO.write(img, "png", new File(path + File.separator + "Collapsed.png"));
     }
 
     public boolean isFullCollapst() {
@@ -83,29 +83,69 @@ public class Board {
         }
     }
 
-    private void changeStateNeighbor(Entropy entropy) throws Exception {
+    private boolean changeStateNeighbor(Entropy entropy) throws Exception {
         int index = this.spots.indexOf(entropy);
         if (index < 0) {
             throw new Exception("entropy not in list of spots");
         }
 
+        //finde Neighbors
         int indexTop = index - this.dimensionWidth;
         int indexRight = index + 1;
         int indexBot = index + this.dimensionWidth;
-        int indexLeft = index - 1;
+        int indexLeft = index - 1;        
 
+        // get Incompatibles
+        Set<Tile> incompatiblesTop = entropy.getFinalTile().incompatiblesTop;
+        Set<Tile> incompatiblesRight = entropy.getFinalTile().incompatiblesRight;
+        Set<Tile> incompatiblesBot = entropy.getFinalTile().incompatiblesBot;
+        Set<Tile> incompatiblesLeft = entropy.getFinalTile().incompatiblesLeft;
+
+        boolean error = false;
+
+        Entropy entropyTop;
         if (indexTop >= 0 && indexTop < this.spots.size()) {
-            this.spots.get(indexTop).reduce(entropy.getFinalTile().incompatibleTop);
+            entropyTop = this.spots.get(indexTop);
+            error = entropyTop.isEmptyAfterReduce(incompatiblesTop) ? true : error;
         }
+        Entropy entropyRight;
         if (indexRight >= 0 && indexRight < this.spots.size()) {
-            this.spots.get(indexRight).reduce(entropy.getFinalTile().incompatibleRight);
+            entropyRight = this.spots.get(indexRight);
+            error = entropyRight.isEmptyAfterReduce(incompatiblesRight) ? true : error;
+        }
+        Entropy entropyBot;
+        if (indexBot >= 0 && indexBot < this.spots.size()) {
+            entropyBot = this.spots.get(indexBot);
+            error = entropyBot.isEmptyAfterReduce(incompatiblesBot) ? true : error;
+        }
+        Entropy entropyLeft;
+        if (indexLeft >= 0 && indexLeft < this.spots.size()) {
+            entropyLeft = this.spots.get(indexLeft);
+            error = entropyLeft.isEmptyAfterReduce(incompatiblesLeft) ? true : error;
+        }
+
+        if(error){
+            return false;
+        }        
+       
+        if (indexTop >= 0 && indexTop < this.spots.size()) {
+            entropyTop = this.spots.get(indexTop);
+            entropyTop.reduce(incompatiblesTop);
+        }       
+        if (indexRight >= 0 && indexRight < this.spots.size()) {
+            entropyRight = this.spots.get(indexRight);
+            entropyRight.reduce(incompatiblesRight);
         }
         if (indexBot >= 0 && indexBot < this.spots.size()) {
-            this.spots.get(indexBot).reduce(entropy.getFinalTile().incompatibleBot);
-        }
+            entropyBot = this.spots.get(indexBot);
+            entropyBot.reduce(incompatiblesBot);
+        }       
         if (indexLeft >= 0 && indexLeft < this.spots.size()) {
-            this.spots.get(indexLeft).reduce(entropy.getFinalTile().incompatibleLeft);
+            entropyLeft = this.spots.get(indexLeft);
+            entropyLeft.reduce(incompatiblesLeft);
         }
+        return true;
+
     }
 
     private Entropy findLowestEntropy() {
@@ -119,12 +159,12 @@ public class Board {
         return lowestEntropy;
     }
 
-    private void analyse() {        
-        for(int x = 0; x < this.dimensionWidth; x ++){
-            for(int y = 0; y < this.dimensionHeight; y++){
+    private void analyse() {
+        for (int x = 0; x < this.dimensionWidth; x++) {
+            for (int y = 0; y < this.dimensionHeight; y++) {
                 int index = x + y * this.dimensionHeight;
                 Entropy entropy = this.spots.get(index);
-                
+
             }
         }
     }
