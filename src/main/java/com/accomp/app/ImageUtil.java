@@ -1,5 +1,6 @@
 package com.accomp.app;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class ImageUtil {
         return true;
     }
 
-    public static void makeEdgeGroupImage(Collection<Edge> edges) {
+    public static void debugEdgeGroup(Collection<Edge> edges) {
         int width = edges.stream().findAny().get().getPixels().length;
         int height = edges.size();
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -70,9 +71,41 @@ public class ImageUtil {
         }
         try {
             ImageIO.write(image, "png", new File("debug" + File.separator + "Edges.png"));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+        } catch (IOException e) {           
             e.printStackTrace();
         }
     }
+
+    public static void debugTiles(Collection<Tile> tiles) {
+        if (tiles.size() < 1) {
+            return;
+        }
+
+        BufferedImage tileImageExample = tiles.stream().findAny().get().getImg();
+        int tileWidth = tileImageExample.getWidth();
+        int tileHeight = tileImageExample.getHeight();
+
+        double sqrt = Math.sqrt(tiles.size());
+        double ceil = Math.ceil(sqrt);
+        int tileCountX = (int) ceil;
+        int tileCountInY = (int) ceil;
+        BufferedImage image = new BufferedImage(tileCountX * tileWidth, tileCountInY * tileHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics graphics = image.getGraphics();    
+
+        int i = 0;
+        for (Tile tile : tiles) {
+            int x = i % tileCountX;
+            int y = i / tileCountX;
+            graphics.drawImage(tile.getImg(), x * tileWidth, y * tileHeight, null);
+            i++;
+        }
+
+        graphics.dispose();
+        try {
+            ImageIO.write(image, "png", new File("debug" + File.separator + "Tiles.png"));
+        } catch (IOException e) {            
+            e.printStackTrace();
+        }
+    }
+
 }

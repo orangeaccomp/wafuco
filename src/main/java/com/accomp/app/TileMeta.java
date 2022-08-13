@@ -22,10 +22,13 @@ public class TileMeta {
         creatTiles();
         creatRotationalVariation();
         creatMirroredVariation();
-        // deletDuplicate();
+        //deletDuplicate();
         giveTilesIncompatible();
 
+
+        // debug
         analyseEdges();
+        analyseTileVariation();
     }
 
     private void creatTiles() throws Exception {
@@ -89,18 +92,21 @@ public class TileMeta {
     // fix deleting all symetery tiles
     private void deletDuplicate() {
         ArrayList<Tile> dupplicateTiles = new ArrayList<>();
+        Set<Tile> saveDupplicateTiles = new HashSet<>();
         for (Tile tileA : this.tiles) {
             for (Tile tileB : this.tiles) {
                 if (tileA != tileB) {
                     boolean duplicat = ImageUtil.equal(tileA.getImg(), tileB.getImg());
                     if (duplicat) {
                         dupplicateTiles.add(tileB);
+                        saveDupplicateTiles.add(tileB);
                     }
                 }
             }
         }
         System.out.println("removing: " + dupplicateTiles.size());
         this.tiles.removeAll(dupplicateTiles);
+        this.tiles.addAll(saveDupplicateTiles);
     }
 
     // 90deg
@@ -142,7 +148,11 @@ public class TileMeta {
             map.put(edge.hash(), edge);
         }
         System.out.println(map.keySet().size());
-        ImageUtil.makeEdgeGroupImage(map.values());
+        ImageUtil.debugEdgeGroup(map.values());
+    }
+
+    private void analyseTileVariation(){
+        ImageUtil.debugTiles(tiles);
     }
 
 }
