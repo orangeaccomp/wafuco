@@ -20,26 +20,23 @@ public class Entropy {
         int randomIndex = random.nextInt(size);
         Tile finalTile = array[randomIndex];
         this.states = new HashSet<>();
-        this.states.add(finalTile);      
+        this.states.add(finalTile);
     }
 
     /**
      * removes all tiles of states wich are in tiles
      */
-    public boolean tryReduce(Collection<Tile> tiles) {
+    public void reduce(Collection<Tile> tiles) {
         if (isFinal())
-            return false;
-
+            return;
         this.states.removeAll(tiles);
+    }
 
-        
-        if (this.states.size() == 0) {
-            // ilegal state
-            // old legal state will be restored
-            this.states.addAll(tiles);
-            return false;
-        }
-        return true;
+    public boolean isEmptyAfterReduce(Collection<Tile> tiles) {
+        this.states.removeAll(tiles);
+        boolean isEmpty = this.states.isEmpty();
+        this.states.addAll(tiles);
+        return isEmpty;
     }
 
     public int getEntropySize() {
