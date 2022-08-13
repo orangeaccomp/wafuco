@@ -23,21 +23,24 @@ public class Board {
     }
 
     public void run() throws Exception {
+        long startTime  = System.currentTimeMillis();
         while (!this.isFullCollapst()) {
-            iterat();
+            // TODO remove need for newstart
+            boolean newstart = false;
+            newstart = !iterat();            
+            if(newstart){
+                makeSpots(tileMeta.getTiles());
+            }
         }
-        analyse();
+        long endTime = System.currentTimeMillis();
+        long runTime = endTime - startTime;
+        System.out.println("run endet after: "+ runTime + " ms");
     }
 
-    public boolean iterat() throws Exception {
-        if (isFullCollapst())
-            return true;
-
+    private boolean iterat() throws Exception {
         Entropy entropy = findLowestEntropy();
         entropy.collaps();
-        changeStateNeighbor(entropy);
-
-        return isFullCollapst();
+        return changeStateNeighbor(entropy);
     }
 
     public void buildImage(String path) throws Exception {
@@ -83,17 +86,23 @@ public class Board {
         }
     }
 
+    /**
+     * remove all incompatible Tiles from Entrophys around one center Entrophy
+     * @param entropy determents all neighbors and the incombatible Tiles
+     * @return true if all neighbor states were changed to a legal state
+     * @throws Exception
+     */
     private boolean changeStateNeighbor(Entropy entropy) throws Exception {
         int index = this.spots.indexOf(entropy);
         if (index < 0) {
             throw new Exception("entropy not in list of spots");
         }
 
-        //finde Neighbors
+        // finde Neighbors
         int indexTop = index - this.dimensionWidth;
         int indexRight = index + 1;
         int indexBot = index + this.dimensionWidth;
-        int indexLeft = index - 1;        
+        int indexLeft = index - 1;
 
         // get Incompatibles
         Set<Tile> incompatiblesTop = entropy.getFinalTile().incompatiblesTop;
@@ -124,14 +133,14 @@ public class Board {
             error = entropyLeft.isEmptyAfterReduce(incompatiblesLeft) ? true : error;
         }
 
-        if(error){
+        if (error) {
             return false;
-        }        
-       
+        }
+
         if (indexTop >= 0 && indexTop < this.spots.size()) {
             entropyTop = this.spots.get(indexTop);
             entropyTop.reduce(incompatiblesTop);
-        }       
+        }
         if (indexRight >= 0 && indexRight < this.spots.size()) {
             entropyRight = this.spots.get(indexRight);
             entropyRight.reduce(incompatiblesRight);
@@ -139,7 +148,7 @@ public class Board {
         if (indexBot >= 0 && indexBot < this.spots.size()) {
             entropyBot = this.spots.get(indexBot);
             entropyBot.reduce(incompatiblesBot);
-        }       
+        }
         if (indexLeft >= 0 && indexLeft < this.spots.size()) {
             entropyLeft = this.spots.get(indexLeft);
             entropyLeft.reduce(incompatiblesLeft);
@@ -157,16 +166,6 @@ public class Board {
             }
         }
         return lowestEntropy;
-    }
-
-    private void analyse() {
-        for (int x = 0; x < this.dimensionWidth; x++) {
-            for (int y = 0; y < this.dimensionHeight; y++) {
-                int index = x + y * this.dimensionHeight;
-                Entropy entropy = this.spots.get(index);
-
-            }
-        }
     }
 
     public String toString() {
