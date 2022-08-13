@@ -81,6 +81,7 @@ public class TileMeta {
         this.tiles.addAll(mirroredTiles);
     }
 
+    // fix deleting all symetery tiles
     private void deletDuplicate() {
         ArrayList<Tile> dupplicateTiles = new ArrayList<>();
         for (Tile tileA : this.tiles) {
