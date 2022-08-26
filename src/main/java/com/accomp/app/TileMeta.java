@@ -2,10 +2,7 @@ package com.accomp.app;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class TileMeta {
     private int width = 10;
@@ -22,7 +19,8 @@ public class TileMeta {
         creatTiles();
         creatRotationalVariation();
         creatMirroredVariation();
-        // deletDuplicate(); // TODO
+
+        deletDuplicate();
         giveTilesIncompatible();
 
         // debug
@@ -68,7 +66,7 @@ public class TileMeta {
     }
 
     private void creatRotationalVariation() {
-        Collection<Tile> rotatedTiles = new ArrayList<>();
+        ArrayList<Tile> rotatedTiles = new ArrayList<>();
         for (Tile mainTile : this.tiles) {
             Tile ninety = this.creatRotatedTile(mainTile);
             Tile oneEighty = this.creatRotatedTile(ninety);
@@ -76,26 +74,31 @@ public class TileMeta {
             rotatedTiles.add(ninety);
             rotatedTiles.add(oneEighty);
             rotatedTiles.add(sevenTwenty);
+            rotatedTiles.add(mainTile);
         }
+        this.tiles = new ArrayList<>();
         this.tiles.addAll(rotatedTiles);
     }
 
     private void creatMirroredVariation() {
-        Collection<Tile> mirroredTiles = new ArrayList<>();
+        ArrayList<Tile> mirroredTiles = new ArrayList<>();
         for (Tile mainTile : this.tiles) {
             mirroredTiles.add(creatMirroredTile(mainTile));
+            mirroredTiles.add(mainTile);
         }
+        this.tiles = new ArrayList<>();
         this.tiles.addAll(mirroredTiles);
     }
 
     // fix deleting all symetery tiles
     private void deletDuplicate() {
-        HashMap<String, Tile> map = new HashMap<>();
+        ArrayList<Tile> cleanTiles = new ArrayList<>();
         for (Tile tile : this.tiles) {
-            map.put(tile.hash(), tile);
+            if (!cleanTiles.contains(tile)) {
+                cleanTiles.add(tile);
+            }
         }
-        this.tiles = new ArrayList<>();
-        this.tiles.addAll(map.values());
+        this.tiles = cleanTiles;
     }
 
     // 90deg
