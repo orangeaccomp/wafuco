@@ -22,22 +22,21 @@ public class Board {
         makeSpots(tileMeta.getTiles());
     }
 
-    public void run() throws Exception {
-        long startTime  = System.currentTimeMillis();
+    public void run(long timeout) throws Exception {
+        Timer timer = new Timer(timeout);
         while (!this.isFullCollapst()) {
-            if(System.currentTimeMillis() - startTime > 1400){
+            if (timer.isTimeout()) {
+                System.out.println("Timeout");
                 break;
             }
             // TODO remove need for newstart
             boolean newstart = false;
-            newstart = !iterat();            
-            if(newstart){
+            newstart = !iterat();
+            if (newstart) {
                 makeSpots(tileMeta.getTiles());
             }
         }
-        long endTime = System.currentTimeMillis();
-        long runTime = endTime - startTime;
-        System.out.println("run endet after: "+ runTime + " ms");
+        System.out.println("run endet after: " + timer.getRunTime() + " ms");
     }
 
     private boolean iterat() throws Exception {
@@ -91,6 +90,7 @@ public class Board {
 
     /**
      * remove all incompatible Tiles from Entrophys around one center Entrophy
+     * 
      * @param entropy determents all neighbors and the incombatible Tiles
      * @return true if all neighbor states were changed to a legal state
      * @throws Exception

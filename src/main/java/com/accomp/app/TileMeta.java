@@ -22,7 +22,7 @@ public class TileMeta {
         creatTiles();
         creatRotationalVariation();
         creatMirroredVariation();
-        //deletDuplicate(); //TODO
+        // deletDuplicate(); // TODO
         giveTilesIncompatible();
 
         // debug
@@ -90,12 +90,12 @@ public class TileMeta {
 
     // fix deleting all symetery tiles
     private void deletDuplicate() {
-        Set<Tile> set = new HashSet<>();
+        HashMap<String, Tile> map = new HashMap<>();
         for (Tile tile : this.tiles) {
-            set.add(tile);
+            map.put(tile.hash(), tile);
         }
         this.tiles = new ArrayList<>();
-        this.tiles.addAll(set);
+        this.tiles.addAll(map.values());
     }
 
     // 90deg
