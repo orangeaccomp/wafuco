@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-
 import javax.imageio.ImageIO;
 
 import com.google.common.hash.HashCode;
@@ -75,7 +74,7 @@ public class ImageUtil {
         }
         try {
             ImageIO.write(image, "png", new File("debug" + File.separator + "Edges.png"));
-        } catch (IOException e) {           
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -84,7 +83,6 @@ public class ImageUtil {
         if (tiles.size() < 1) {
             return;
         }
-
         BufferedImage tileImageExample = tiles.stream().findAny().get().getImg();
         int tileWidth = tileImageExample.getWidth();
         int tileHeight = tileImageExample.getHeight();
@@ -93,8 +91,9 @@ public class ImageUtil {
         double ceil = Math.ceil(sqrt);
         int tileCountX = (int) ceil;
         int tileCountInY = (int) ceil;
-        BufferedImage image = new BufferedImage(tileCountX * tileWidth, tileCountInY * tileHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics graphics = image.getGraphics();    
+        BufferedImage image = new BufferedImage(tileCountX * tileWidth, tileCountInY * tileHeight,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics graphics = image.getGraphics();
 
         int i = 0;
         for (Tile tile : tiles) {
@@ -107,23 +106,22 @@ public class ImageUtil {
         graphics.dispose();
         try {
             ImageIO.write(image, "png", new File("debug" + File.separator + "Tiles.png"));
-        } catch (IOException e) {            
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static String hash(BufferedImage img) {
-        String str = "";
+    public static long hash(BufferedImage img) {
+        HashFunction hashFunction = Hashing.sha256();
+        HashCode hashCode = hashFunction.hashInt(0);
+
         int width = img.getWidth();
         int height = img.getHeight();
         for (int x = 0; x < height; x++) {
             for (int y = 0; y < width; y++) {
-                str += img.getRGB(x, y);
+                hashCode = hashFunction.hashInt(img.getRGB(x, y) + hashCode.asInt());
             }
         }
-        HashFunction hashFunction = Hashing.sha256();
-        HashCode hashCode = hashFunction.hashUnencodedChars(str);   
-        return hashCode.toString();
+        return hashCode.asLong();
     }
-
 }

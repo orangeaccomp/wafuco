@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class Tile implements Cloneable {
     private BufferedImage img;
+    private long hash;
 
     // Pattern
     Edge top;
@@ -21,6 +22,7 @@ public class Tile implements Cloneable {
 
     public Tile(BufferedImage img) {
         this.img = img;
+        this.hash = hash();
         makeEdge();
     }
 
@@ -41,16 +43,20 @@ public class Tile implements Cloneable {
         }
     }
 
+    private long hash() {
+        return ImageUtil.hash(this.img);
+    }
+
     public Tile clone() {
         return new Tile(img);
     }
 
-    public BufferedImage getImg(){
+    public BufferedImage getImg() {
         return this.img;
     }
 
-    public String hash(){
-        return ImageUtil.hash(this.img);
+    public long getHash() {
+        return this.hash;
     }
 
     @Override
@@ -61,15 +67,14 @@ public class Tile implements Cloneable {
 
         if (obj.getClass() != this.getClass()) {
             return false;
-        } 
-        
+        }
+
         final Tile other = (Tile) obj;
-        if(other.hash() != other.hash()){
+        if (this.getHash() != other.getHash()) {
             return false;
         }
 
         return true;
     }
 
-    
 }
