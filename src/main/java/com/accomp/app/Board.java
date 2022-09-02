@@ -22,29 +22,15 @@ public class Board {
         makeSpots(tileMeta.getTiles());
     }
 
-    public void run(long timeout) throws Exception {
-        Timer timer = new Timer(timeout);
-        int trys = 0;
-        while (!this.isFullCollapst()) {
-            if (timer.isTimeout()) {
-                System.out.println("Timeout");
-                break;
-            }
-            // TODO remove need for newstart
-            boolean newstart = false;
-            newstart = !iterat();
-            if (newstart) {
-                makeSpots(tileMeta.getTiles());
-                trys++;
-            }
+    public void run() throws Exception {
+        Timer timer = new Timer();
+        for (int i = 0; i < this.spots.size(); i++) {
+            Entropy entropy = this.spots.get(i);
+            entropy.collaps();
+            changeStateNeighbor(entropy);
+            System.out.println(i);
         }
-        System.out.println("run endet after: " + timer.getRunTime() + " ms and " + trys + " trys");
-    }
-
-    private boolean iterat() throws Exception {
-        Entropy entropy = findLowestEntropy();
-        entropy.collaps();
-        return changeStateNeighbor(entropy);
+        System.out.println("run endet after: " + timer.getRunTime() + " ms and ");
     }
 
     public void buildImage(String path) throws Exception {
@@ -160,17 +146,6 @@ public class Board {
         }
         return true;
 
-    }
-
-    private Entropy findLowestEntropy() {
-        Entropy lowestEntropy = null;
-        int size = Integer.MAX_VALUE;
-        for (Entropy entropy : this.spots) {
-            if (entropy.getEntropySize() < size && !entropy.isFinal()) {
-                lowestEntropy = entropy;
-            }
-        }
-        return lowestEntropy;
     }
 
     public String toString() {
