@@ -4,6 +4,11 @@ public class Timer {
     private long birth;
     private long death;
 
+    public Timer() {
+        this.birth = System.currentTimeMillis();
+        this.death = Long.MAX_VALUE;
+    }
+
     public Timer(long lifeTime) {
         this.birth = System.currentTimeMillis();
         this.death = birth + lifeTime;
