@@ -10,9 +10,14 @@ public class App {
         try {
             BufferedImage baseImage = ImageIO.read(new File("data" + File.separator + "clearMap4.png"));
             TileMeta meta = new TileMeta(10, 10, baseImage);
-            Board board = new Board(meta, 50, 50); // TODO if width != height image is broken
-            board.run(24000);
+            Board board = new Board(meta, 300, 300); // TODO if width != height image is broken
+
+            System.out.println("run");
+            board.run();
+
+            System.out.println("build image");
             board.buildImage("generated");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
