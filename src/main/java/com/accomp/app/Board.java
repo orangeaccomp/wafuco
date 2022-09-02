@@ -24,6 +24,7 @@ public class Board {
 
     public void run(long timeout) throws Exception {
         Timer timer = new Timer(timeout);
+        int trys = 0;
         while (!this.isFullCollapst()) {
             if (timer.isTimeout()) {
                 System.out.println("Timeout");
@@ -34,9 +35,10 @@ public class Board {
             newstart = !iterat();
             if (newstart) {
                 makeSpots(tileMeta.getTiles());
+                trys++;
             }
         }
-        System.out.println("run endet after: " + timer.getRunTime() + " ms");
+        System.out.println("run endet after: " + timer.getRunTime() + " ms and " + trys + " trys");
     }
 
     private boolean iterat() throws Exception {
